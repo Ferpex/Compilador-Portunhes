@@ -1,0 +1,8 @@
+inicio(){
+inteiro i = -10 ;
+boleano s = 'true' ;
+para( i = 10 ; i <= 10 ; s -- ){
+se( i == 10 ){
+}
+}
+}

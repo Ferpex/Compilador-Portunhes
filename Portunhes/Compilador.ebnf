@@ -1,0 +1,98 @@
+
+<inicio>::= "inicio(){ " [<declaracoes>] [<comandos>]" } ";
+<comandos>::= (<comando> <comandos>) | <comando>;
+<declaracoes>::= (<declaracao> <fim> <declaracoes>) | <declaracao> <fim>;
+<comando>::= (<operacao> <fim>) | <repeticao> | <se>;
+<declaracao>::= <tipo> <id> <atribuicao>;
+<atribuicao>::= " = " <variavel>;
+<operacao>::= (<id> " = " <id> <operador> <id>) | (<id> " = " <id> <operador> <numero>) | (<id> " = " <numero> <operador> <id>) | ( <id> " = " <numero> <operador> <numero>); 
+<fim>::= " ; ";
+
+<comparacao>::= (<id> <logico> <id>) | (<id> <logico> <numero>);
+<se>::= " se( "<comparacao>" ){ "[<comandos>]" } ";
+
+<repeticao>::= <enquanto> | <para>;
+<enquanto>::= " enquanto( "<comparacao>" ){ "[<comandos>]" } ";
+<para>::= " para( "<id> <atribuicao>" ; "(<comparacao>)" ; " (<id> <sentido>)" ){ "[<comandos>]" } ";
+
+<sentido>::= ++ | --;
+
+<tipo>::= boleano | inteiro | palavra | caracter | quebrado;
+
+<numero>:: = <quebrado> | <inteiro>;
+<variavel> ::= <boleano> | <inteiro> | <palavra> | <caracter> | <quebrado>;
+<boleano> ::= <verdadeiro> | <falso>;
+<caracter> ::= "'"<letra>"'" | "'"<maiuscula>"'";
+<digitos> ::= (<digito> <digitos>) | <digito>;
+<inteiro> ::= [<sinal>] <digitos>;
+<quebrado> ::= [<sinal>] <digitos> "," <digitos>;
+<palavra> :: = "'"<caracteres>"'";
+<caracteres> ::= (<caracter> <caracteres>) | <caracter>;
+<id>::= <palavra>;
+
+<verdadeiro> ::= "true";
+<falso> ::= "false";
+<maiuscula> ::= A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z ;
+<letra> ::= a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z;
+<digito> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+<sinal> ::= - | + ;
+<operador> ::= - | + | * | /;
+<logico> ::= < | > | == | != | <= | >=;
+
+
+************************************************** FIRST **************************************************
+<inicio>::= ""
+<comandos>::= a..Z | "se(" | "enquanto(" | "para("
+<declaracoes>::= boleano | inteiro | palavra | caracter | quebrado 
+<comando>::= a..Z | "se(" | "enquanto(" | "para("
+<declaracao>::= boleano | inteiro | palavra | caracter | quebrado 
+<atribuicao>::= "="
+<operacao>::= a..Z
+<fim>::= ";"
+
+<comparacao>::= a..Z
+<se>::= "se("
+<repeticao>::= "enquanto(" | "para("
+<enquanto>::= "enquanto("
+<para>::= "para("
+
+<sentido>::= ++ | --
+<tipo>::= boleano | inteiro | palavra | caracter | quebrado
+<numero>::= 0..9
+<variavel>::=  1 | 0 | - | + | 0..9 | a..Z 
+<boleano>::= 0 | 1
+<caracter>::= a..Z
+<digitos>::= 0..9
+<inteiro>::= - | + | 0..9
+<quebrado>::= - | + | 0..9
+<palavra>::= a..Z
+<caracteres>::= a..Z
+<id>::= a..Z
+
+**************************************************FOLLOW**************************************************
+
+<declaracoes>::= <comandos>
+<comandos>::= "}"
+<declaracao>::= <fim>
+<comando>::= <comandos> 
+<operacao>::= <fim>
+<fim>::= <declaracoes>
+
+"){"::= <comandos>
+"=" ::= <variavel> | <id> | <numero>
+";" ::= <comparacao> | <id>
+
+<comparacao>::= "){" | ";"
+
+<sentido>::= "){"
+
+<tipo>::= <id>
+
+<numero>::= <operador>
+<operador>::= <numero> | <id>
+<caracter>::= <caracteres>
+<digitos>::= ","
+
+<id>::= "=" | <sentido> | <atribuicao>
+<atribuicao>::= ";" 
+*********************************************************************************************************

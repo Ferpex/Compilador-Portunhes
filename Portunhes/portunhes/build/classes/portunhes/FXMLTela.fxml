@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import org.fxmisc.richtext.CodeArea?>
+
+<BorderPane fx:id="painel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="portunhes.FXMLTelaController">
+   <center>
+      <SplitPane dividerPositions="0.6970509383378016" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+         <items>
+            <TabPane focusTraversable="false" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab fx:id="tabPrograma" text="Programa">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="380.0" prefWidth="596.0">
+                            <children>
+                                <CodeArea fx:id="codearea" focusTraversable="true" prefHeight="388.0" prefWidth="596.0" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+            <TabPane prefHeight="150.0" prefWidth="598.0">
+               <tabs>
+                  <Tab fx:id="tabLog" closable="false" text="Log">
+                     <content>
+                        <TextArea fx:id="txLog" editable="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" />
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+         </items>
+      </SplitPane>
+   </center>
+   <top>
+      <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btCompilar" focusTraversable="false" mnemonicParsing="false" onAction="#clkCompilar" text="Compilar" />
+            <Button fx:id="btLimpar" focusTraversable="false" mnemonicParsing="false" onAction="#clkApagar" text="Limpar" />
+         </children>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </HBox>
+   </top>
+</BorderPane>
