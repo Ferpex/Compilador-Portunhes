@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,6 +25,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -34,6 +37,9 @@ import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.reactfx.Subscription;
 import portunhes.analisador.AnalisadorLexico;
+import portunhes.analisador.ErroTK;
+import portunhes.analisador.Simbolo;
+import portunhes.analisador.Tabela;
 
 public class FXMLTelaController implements Initializable
 {
@@ -57,6 +63,19 @@ public class FXMLTelaController implements Initializable
     private Button btCompilar;
     @FXML
     private Button btLimpar;
+    @FXML
+    private TableView<Simbolo> tabSimbolos;
+    static TableView<Simbolo> tab;
+    @FXML
+    private TableColumn<String, String> colToken;
+    @FXML
+    private TableColumn<String, String> colLinha;
+    @FXML
+    private TableColumn<String, String> colLexema;
+    @FXML
+    private TableColumn<String, String> colValor;
+    @FXML
+    private TableColumn<String, String> colTipo;
     
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -67,7 +86,11 @@ public class FXMLTelaController implements Initializable
     private void initializeCodeArea() {
         codearea = new CodeArea();
         codearea.setParagraphGraphicFactory(LineNumberFactory.get(codearea));
-
+        colLinha.setCellValueFactory(new PropertyValueFactory("linha"));
+        colToken.setCellValueFactory(new PropertyValueFactory("token"));
+        colLexema.setCellValueFactory(new PropertyValueFactory("lexema"));
+        colTipo.setCellValueFactory(new PropertyValueFactory("tipo"));
+        colValor.setCellValueFactory(new PropertyValueFactory("valor"));
         Subscription cleanupWhenNoLongerNeedIt = codearea
                 .multiPlainChanges()
                 .successionEnds(Duration.ofMillis(50))
@@ -160,11 +183,22 @@ public class FXMLTelaController implements Initializable
         if(!codearea.getText().isEmpty())
         {
             AnalisadorLexico analisadorlexico = new AnalisadorLexico();
-            txLog.setText(analisadorlexico.compilar(codearea.getText()));
+            ErroTK e = new ErroTK();
+            e = analisadorlexico.compilar(codearea.getText());
+            txLog.setText(e.getErro());
+            AttTabela(e);
         }
         else
         {
            txLog.setText("Não existe programa para compilar"); 
+        }
+    }
+    public void AttTabela(ErroTK e)
+    {
+        tabSimbolos.getItems().clear();
+        for(int i =0;i<e.getTab().size();i++)
+        {
+            tabSimbolos.getItems().add(e.get(i));
         }
     }
     

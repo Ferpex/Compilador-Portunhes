@@ -3,6 +3,7 @@ package portunhes.analisador;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import javafx.scene.control.TableView;
 
 public class AnalisadorLexico {
     
@@ -10,6 +11,7 @@ public class AnalisadorLexico {
     int linha = 1;
     String codigoFonte;
     AnalisadorSintatico sinta = new AnalisadorSintatico();
+    Semantica sem = new Semantica();
     PalavraReservada reserva = new PalavraReservada();
     public String identificaPalavra(String codigo)
     { 
@@ -47,24 +49,40 @@ public class AnalisadorLexico {
         
         return erros;
     }
-    public String compilar(String codigo)
+    public ErroTK compilar(String codigo)
     {
+        ErroTK e = new ErroTK();
         Stack pilha = new Stack();
-        String msg = "Compilado com sucesso!";
+        String msg = "";
         String erros = "";
         List<String> possiveis = null;
         List<String> aux = new ArrayList<>();
         codigo = codigo.toLowerCase();
-        
+        Simbolo s = new Simbolo();
         codigoFonte = codigo;
         String palavra = "";
         String token = "";
+        
+        String antToken = "";
+        String antPalavra = "";
+        
         while (index < codigo.length())
         {
             palavra = identificaPalavra(codigoFonte);
             if(palavra!="")
             {
-            token = reserva.getToken_Palavra(palavra);
+                token = reserva.getToken_Palavra(palavra);
+            
+            s = sem.AnaliseSemantica(token, palavra, linha+"", antToken, antPalavra, e);
+            if(!s.getToken().equals("nada"))
+            {
+                e.add(s);
+            }
+            if(token.equals("tipo")||token.equals("id"))
+            {
+                antToken = token;
+                antPalavra = palavra;
+            }
             if(token.equals("erro"))
             {
                 index = codigo.length();
@@ -121,8 +139,16 @@ public class AnalisadorLexico {
         else if(!pilha.isEmpty())
         {
             msg = "ERRO Ainda falta }";
+            msg += "\n pilha:"+pilha.pop().toString();
         }
-        return msg;
+        sem.Usados(e);
+        if(e.erro=="" && msg=="")
+        {
+            e.erro = "Compilado com sucesso!";
+        }
+        else
+            e.erro += msg;
+        return e;
         
     }              
 }

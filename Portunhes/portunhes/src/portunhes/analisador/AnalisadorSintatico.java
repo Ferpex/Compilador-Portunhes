@@ -65,6 +65,15 @@ public class AnalisadorSintatico {
                     //proximo do se
                     possiveis.add("id");
                 }
+                if(token.equals("operador"))
+                {
+                    pilhaAux.push("operador");
+                    possiveis.add("id");
+                    possiveis.add("palavra");
+                    possiveis.add("caracter");
+                    possiveis.add("inteiro");
+                    possiveis.add("quebrado");
+                }
                 if(token.equals("tipo"))
                 {
                     pilhaAux.push("tipo");
@@ -133,6 +142,21 @@ public class AnalisadorSintatico {
                         //o proximo é 
                         possiveis.add("sentido");
                     }
+                    if(tokenAnt.equals("inicio"))
+                    {
+                        pilhaAux.push("atribui");
+                        possiveis.add("s_igual");
+                    }
+                    if(tokenAnt.equals("atribui"))
+                    {
+                        pilhaAux.pop();
+                        possiveis.add("operador");
+                    }
+                    if(tokenAnt.equals("operador"))
+                    {
+                        pilhaAux.pop();
+                        possiveis.add("fim");
+                    }
                 }
                 if(token.equals("inteiro") || token.equals("quebrado") || token.equals("boleano") || token.equals("palavra") || token.equals("caracter"))
                 {
@@ -152,7 +176,14 @@ public class AnalisadorSintatico {
                         else
                             possiveis.add("s_a_chaves");//no caso do enquanto
                     }
-                    else
+                    else if(tokenAnt.equals("operador"))
+                    {
+                        possiveis.add("fim");
+                    }
+                    else if(tokenAnt.equals("atribui"))
+                    {
+                        possiveis.add("fim");
+                    }else
                     {
                         pilhaAux.push(tokenAnt);
                         possiveis.add("fim"); //no caso de atribuicao
@@ -166,6 +197,8 @@ public class AnalisadorSintatico {
                     possiveis.add("inteiro");
                     possiveis.add("quebrado");
                     possiveis.add("boleano");
+                    
+                    possiveis.add("id");
                 }
                 if(token.equals("logico"))
                 {
@@ -214,6 +247,10 @@ public class AnalisadorSintatico {
                         //se o anterior for o fim2 o proximo possivel é id
                         possiveis.add("id");
                     }
+                    if(tokenAnt.equals("inicio"))
+                    {
+                        possiveis.add("s_f_chaves");
+                    }
                 }
                 if(token.equals("sentido"))
                 {
@@ -221,6 +258,9 @@ public class AnalisadorSintatico {
                 }
                 if(token.equals("s_f_chaves"))
                 {
+                    String var = pilhaAux.pop().toString();
+                    System.out.println("Variavel: "+var);
+                    pilhaAux.push(var);
                     if(!pilhaAux.empty())
                     {
                         //desempilha toda vez que achar um fecha chaves

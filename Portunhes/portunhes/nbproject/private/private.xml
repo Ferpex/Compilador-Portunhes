@@ -5,10 +5,14 @@
         <group>
             <file>file:/C:/Users/ferna/Desktop/IMPORTANTE/Portunhes/portunhes/src/portunhes/analisador/AnalisadorSintatico.java</file>
             <file>file:/C:/Users/ferna/Desktop/IMPORTANTE/Portunhes/portunhes/src/portunhes/analisador/PalavraReservada.java</file>
+            <file>file:/C:/Users/ferna/Desktop/IMPORTANTE/Portunhes/portunhes/src/portunhes/analisador/ErroTK.java</file>
             <file>file:/C:/Users/ferna/Desktop/IMPORTANTE/Portunhes/portunhes/src/portunhes/analisador/AnalisadorLexico.java</file>
+            <file>file:/C:/Users/ferna/Desktop/IMPORTANTE/Portunhes/portunhes/src/portunhes/analisador/Semantica.java</file>
+            <file>file:/C:/Users/ferna/Desktop/IMPORTANTE/Portunhes/portunhes/src/portunhes/analisador/Simbolo.java</file>
             <file>file:/C:/Users/ferna/Desktop/IMPORTANTE/Portunhes/portunhes/src/portunhes/Portunhes.java</file>
             <file>file:/C:/Users/ferna/Desktop/IMPORTANTE/Portunhes/portunhes/src/portunhes/analisador/Token.java</file>
             <file>file:/C:/Users/ferna/Desktop/IMPORTANTE/Portunhes/portunhes/src/portunhes/FXMLTelaController.java</file>
+            <file>file:/C:/Users/ferna/Desktop/IMPORTANTE/Portunhes/portunhes/src/portunhes/analisador/Tabela.java</file>
             <file>file:/C:/Users/ferna/Desktop/IMPORTANTE/Portunhes/portunhes/src/portunhes/palavrasChaves.css</file>
         </group>
     </open-files>
